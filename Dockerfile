@@ -25,7 +25,7 @@ RUN apk add nano --no-cache
 
 # Install Kubernetes-Cli (kubectl, kubectl cert-manager)
 RUN az aks install-cli --only-show-errors && \
-    curl -sSL https://github.com/jetstack/cert-manager/releases/latest/download/kubectl-cert_manager-linux-amd64.tar.gz | tar -zx kubectl-cert_manager -C /usr/local/bin
+    curl -sSL https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/kubectl-cert_manager-linux-amd64.tar.gz
 
 # Install Wercker\Stern (stern)
 RUN curl -sSLo /usr/local/bin/stern https://github.com/wercker/stern/releases/latest/download/stern_linux_amd64 && \
