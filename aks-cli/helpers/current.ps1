@@ -16,12 +16,9 @@ function SubscriptionMenu
     return $GlobalSubscriptions[$currentSubscription]
 }
 
-function SwitchCurrentSubscription([switch] $clear)
+function SwitchCurrentSubscription
 {
-    if ($clear)
-    {
-        Clear-Host
-    }
+    Clear-Host
 
     Write-Info "Choose Azure Subscription: "
 
@@ -74,23 +71,24 @@ function ClusterMenu([switch] $refresh)
 
 function SwitchCurrentCluster([switch] $clear, [switch] $refresh)
 {
-    if ($clear)
-    {
-        Clear-Host
-    }
+    Clear-Host
 
     Write-Info "Choose Kubernetes Cluster: "
 
     $global:GlobalCurrentCluster = ClusterMenu -refresh $refresh
 
-    AzAksCurrentCommand 'get-credentials -a --overwrite-existing > $1'
+    if (Test-Path -Path Env:AksAdmin) {
+        AzAksCurrentCommand 'get-credentials -a --overwrite-existing > $1'
+    } else {
+        AzAksCurrentCommand 'get-credentials --overwrite-existing > $1'
+    }
 
     UpdateShellWindowTitle
     
-    if ($clear)
-    {
-        Clear-Host
-    }
+    # if ($clear)
+    # {
+    #     Clear-Host
+    # }
 }
 
 function SwitchCurrentClusterTo($resourceGroup)
